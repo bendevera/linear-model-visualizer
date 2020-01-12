@@ -2,14 +2,23 @@ import React from 'react';
 import './App.css';
 import Graph from '../Graph/Graph';
 import Navbar from '../Navbar/Navbar';
-
+import Sidebar from '../Sidebar/Sidebar';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       active: [],
-      lineData: []
+      lineData: [],
+      results: {
+        A: null,
+        b: null,
+        mx: null,
+        my: null,
+        sx: null,
+        sy: null, 
+        r: null
+      }
     }
     this.getBestFit = this.getBestFit.bind(this);
     this.setActive = this.setActive.bind(this);
@@ -75,8 +84,18 @@ class App extends React.Component {
     console.log(A)
     let lineData = this.getLineData(b, A)
     console.log(lineData)
+    let results = {
+      A: A,
+      b: b,
+      mx: mx,
+      my: my,
+      sx: sx,
+      sy: sy, 
+      r: r
+    }
     this.setState({
-      lineData: lineData
+      lineData: lineData,
+      results: results
     })
   }
 
@@ -100,8 +119,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navbar getBestFit={this.getBestFit} />
-        {/* <button className="best-fit-btn" onClick={this.getBestFit}>Get Best Fit</button> */}
-        <Graph passActive={this.setActive} lineData={this.state.lineData} />
+        <div className="row">
+          <Graph passActive={this.setActive} lineData={this.state.lineData} />
+          <Sidebar results={this.state.results} />
+        </div>
       </div>
     );
   }

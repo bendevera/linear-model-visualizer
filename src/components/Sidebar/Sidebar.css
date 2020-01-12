@@ -1,0 +1,13 @@
+.sidebar-section {
+    color: rgb(51,57,64);
+}
+
+.sidebar-section h3 {
+    text-align: left;
+    font-size: 1.5em;
+}
+
+.sidebar-section p {
+    margin: 0;
+    padding: 0;
+}

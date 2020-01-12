@@ -40,36 +40,38 @@ class Graph extends React.Component {
     render() {
         const cyan900 = "#61dafb";
         return (
-            <VictoryChart
+            <div className="col-md-9">
+                <VictoryChart
             width={500}
             height={500}
             theme={VictoryTheme.material}
             domain={{ x: [0, 5], y: [0, 5] }}
             >
-                <VictoryScatter
-                    style={{ data: { fill: "black" } }}
-                    size={7}
-                    events={[{
-                        target: "data",
-                        eventHandlers: {
-                          onClick: () => {
-                            return [
-                              {
-                                target: "data",
-                                mutation: this.handleData
-                              }
-                            ];
-                          }
-                        }
-                    }]}
-                    data={this.state.data}
-                />
-                <VictoryLine
-                    style={{
-                        data: { stroke : "#c43a31" }
-                    }}
-                    data={this.props.lineData} />
-            </VictoryChart>
+                    <VictoryScatter
+                        style={{ data: { fill: "black" } }}
+                        size={7}
+                        events={[{
+                            target: "data",
+                            eventHandlers: {
+                            onClick: () => {
+                                return [
+                                {
+                                    target: "data",
+                                    mutation: this.handleData
+                                }
+                                ];
+                            }
+                            }
+                        }]}
+                        data={this.state.data}
+                    />
+                    <VictoryLine
+                        style={{
+                            data: { stroke : "#c43a31" }
+                        }}
+                        data={this.props.lineData} />
+                </VictoryChart>
+            </div>
         )
     }
 }
