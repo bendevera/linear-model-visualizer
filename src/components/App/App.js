@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import Graph from '../Graph/Graph';
+import Navbar from '../Navbar/Navbar';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -97,7 +99,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <button className="best-fit-btn" onClick={this.getBestFit}>Get Best Fit</button>
+        <Navbar getBestFit={this.getBestFit} />
+        {/* <button className="best-fit-btn" onClick={this.getBestFit}>Get Best Fit</button> */}
         <Graph passActive={this.setActive} lineData={this.state.lineData} />
       </div>
     );
