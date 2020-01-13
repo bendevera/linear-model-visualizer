@@ -3,6 +3,8 @@ import './App.css';
 import Graph from '../Graph/Graph';
 import Navbar from '../Navbar/Navbar';
 import Sidebar from '../Sidebar/Sidebar';
+import {get_r, mean, standardDeviation, roundToThree} from '../../util';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -18,30 +20,13 @@ class App extends React.Component {
         sx: null,
         sy: null, 
         r: null
-      }
+      },
+      xmax: 5,
+      ymax: 5
     }
     this.getBestFit = this.getBestFit.bind(this);
     this.setActive = this.setActive.bind(this);
-  }
-
-  sum(array) {
-    return array.reduce((a, b) => a+b, 0)
-  }
-
-  mean(array, ln) {
-    return this.sum(array) / ln
-  }
-
-  standardDeviation(array, mean, ln) {
-    let std = array.map((item) => {
-      return Math.pow(item - mean, 2)
-    })
-    std = this.sum(std)
-    return Math.pow(std/(ln-1), .5)
-  }
-
-  roundToThree(num) {
-    return Math.round(num*1000) / 1000
+    this.addPoint = this.addPoint.bind(this);
   }
 
   getBestFit() {
@@ -51,51 +36,36 @@ class App extends React.Component {
       return 
     }
 
-    // x calculations
+    // array of all x values
     let x = this.state.active.map((item) => { 
       return item.x 
     })
     // calculates mean of x 
-    let mx =  this.mean(x, ln)
-
+    let mx =  mean(x, ln)
     // calculates std of x
-    let sx = this.standardDeviation(x, mx, ln)
-
-    // y calculations
+    let sx = standardDeviation(x, mx, ln)
+    // array of all y values
     let y = this.state.active.map((item) => {
       return item.y
     })
     // calculates mean of y
-    let my = this.mean(y, ln)
+    let my = mean(y, ln)
     // calculates std of y
-    let sy = this.standardDeviation(y, my, ln)
-
+    let sy = standardDeviation(y, my, ln)
     // r calculations
-    let num_r = x.map((item, index) => {
-      return item * y[index]
-    }).reduce((a, b) => a+b, 0)
-    let den_r = x.map((item) => {
-      return Math.pow(item, 2)
-    }).reduce((a,b) => a+b, 0)
-    den_r = den_r + y.map((item) => {
-      return Math.pow(item, 2)
-    }).reduce((a, b) => a+b, 0)
-    let r = num_r / den_r
+    let r = get_r(x, y)
     
     let b = r * (sy/sx)
     let A = my - (b*mx)
-    console.log(b)
-    console.log(A)
     let lineData = this.getLineData(b, A)
-    console.log(lineData)
     let results = {
-      A: this.roundToThree(A),
-      b: this.roundToThree(b),
-      mx: this.roundToThree(mx),
-      my: this.roundToThree(my),
-      sx: this.roundToThree(sx),
-      sy: this.roundToThree(sy), 
-      r: this.roundToThree(r)
+      A: roundToThree(A),
+      b: roundToThree(b),
+      mx: roundToThree(mx),
+      my: roundToThree(my),
+      sx: roundToThree(sx),
+      sy: roundToThree(sy), 
+      r: roundToThree(r)
     }
     this.setState({
       lineData: lineData,
@@ -119,13 +89,32 @@ class App extends React.Component {
     console.log(this.state.active)
   }
 
+  addPoint(point) {
+    let newActive = this.state.active;
+    newActive.push(point)
+    this.setState({
+      active: newActive
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Navbar getBestFit={this.getBestFit} />
         <div className="row">
-          <Graph passActive={this.setActive} lineData={this.state.lineData} />
-          <Sidebar results={this.state.results} pointData={this.state.active} />
+
+          <Graph 
+            passActive={this.setActive} 
+            active={this.state.active} 
+            lineData={this.state.lineData} 
+            xmax={this.state.xmax}
+            ymax={this.state.ymax}/>
+
+          <Sidebar 
+            results={this.state.results} 
+            pointData={this.state.active} 
+            addData={this.addPoint} />
+            
         </div>
       </div>
     );

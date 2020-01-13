@@ -4,51 +4,33 @@ import { VictoryChart, VictoryScatter, VictoryTheme, VictoryLine } from 'victory
 class Graph extends React.Component {
     constructor(props) {
         super(props)
-        let data = []
-        for (let i=0; i < 6; i++) {
-            for (let j=0; j < 6; j++) {
-                let curr = {x: i, y: j}
-                data.push(curr)
-            }
-        }
-        this.state = {
-            data: data,
-            active: []
-        }
         this.handleData = this.handleData.bind(this);
     }
 
     handleData(props) {
-        const cyan900 = "#61dafb";
-        const fill = props.style && props.style.fill;
-        let new_active = this.state.active;
-        if (fill === "black") {
-            let curr = {x: props.datum.x, y: props.datum.y}
-            new_active.push(curr)
-        } else {
-            for (let i=0; i<new_active.length; i++) {
-                if (new_active[i].x === props.datum.x & new_active[i].y === props.datum.y) {
-                    new_active.splice(i, 1)
-                    break
-                }
+        let new_active = this.props.active;
+        for (let i=0; i<new_active.length; i++) {
+            if (new_active[i].x === props.datum.x & new_active[i].y === props.datum.y) {
+                new_active.splice(i, 1)
+                break
             }
         }
         this.props.passActive(new_active)
-        return fill === "black" ? { style: { fill: cyan900 } } : { style: { fill: "black" } }
+        // return fill === "black" ? { style: { fill: cyan900 } } : { style: { fill: "black" } }
+        return null
     }
 
     render() {
-        const cyan900 = "#61dafb";
         return (
-            <div className="col-md-8 graph-section">
+            <div className="col-md-8 graph-section m-0">
                 <VictoryChart
             width={500}
             height={500}
             theme={VictoryTheme.material}
-            domain={{ x: [0, 5], y: [0, 5] }}
+            domain={{ x: [0, this.props.xmax], y: [0, this.props.ymax] }}
             >
                     <VictoryScatter
-                        style={{ data: { fill: "black" } }}
+                        style={{ data: { fill: "#61dafb" } }}
                         size={7}
                         events={[{
                             target: "data",
@@ -63,7 +45,7 @@ class Graph extends React.Component {
                             }
                             }
                         }]}
-                        data={this.state.data}
+                        data={this.props.active}
                     />
                     <VictoryLine
                         style={{

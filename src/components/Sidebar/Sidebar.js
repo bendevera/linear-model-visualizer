@@ -11,9 +11,13 @@ class Sidebar extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            active: "0"
+            active: "0",
+            xinput: null,
+            yinput: null
         }
         this.setActive = this.setActive.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.addPoint = this.addPoint.bind(this);
     }
 
     setActive(e) {
@@ -23,8 +27,31 @@ class Sidebar extends React.Component {
         })
     }
 
+    handleChange(e) {
+        let change = {};
+        change[e.target.name] = parseInt(e.target.value)
+        this.setState(change);
+    }
+
+    addPoint() {
+        if (this.state.xinput !== null & this.state.yinput !== null) {
+            if (this.state.xinput < 0) {
+                alert("x value can not be less than 0.")
+            }
+            if (this.state.yinput < 0) {
+                alert("y value can not be less than 0.")
+            }
+            this.props.addData({
+                x: this.state.xinput,
+                y: this.state.yinput
+            })
+        } else {
+            alert("x and/or y can not be null.")
+        }
+    }
+
     render() {
-        if (this.state.active === "0") {
+        if (this.state.active === "1") {
             let statsSection;
             let formulaSection;
             if (this.props.results.mx !== null) {
@@ -58,29 +85,38 @@ class Sidebar extends React.Component {
             </div>)
             }
             return (
-                <div className="col-md-4 sidebar-section">
+                <div className="col-md-4 sidebar-section m-0">
                     <div className="btn-group sidebar-btns" role="group">
-                        <button className="btn btn-secondary active" data={0}>Results</button>
-                        <button className="btn btn-secondary" onClick={this.setActive} data={1}>Data</button>
+                        <button className="btn btn-secondary" onClick={this.setActive} data={0}>Data</button>
+                        <button className="btn btn-secondary active" data={1}>Results</button>
                     </div>
                     <h3>Simple Linear Regression Results</h3>
-                    {statsSection}
-                    {formulaSection}
                     <p>
                         The line of best fit of <i>Simple Linear Regression</i> is calculated by finding the
                         y-intercept (<i>A</i>) and slope (<i>b</i>) to use in formula <i>Y' = A + bX</i> where <i>Y'</i> is the predicted 
                         <i>Y</i> value of the linear model at a given <i>X</i> value. 
                     </p>
+                    {statsSection}
+                    {formulaSection}
                 </div>
             )
         } else {
             return (
-                <div className="col-md-4 sidebar-section">
+                <div className="col-md-4 sidebar-section m-0">
                     <div className="btn-group sidebar-btns" role="group">
-                        <button className="btn btn-secondary" onClick={this.setActive} data={0}>Results</button>
-                        <button className="btn btn-secondary active" data={1}>Data</button>
+                        <button className="btn btn-secondary active" data={0}>Data</button>
+                        <button className="btn btn-secondary" onClick={this.setActive} data={1}>Results</button>
                     </div>
                     <h3>Simple Linear Regression Data</h3>
+                    <div className="input-group mb-3">
+                        <input type="number" name="xinput" onChange={this.handleChange} className="form-control" placeholder="x value" />
+                    </div>
+                    <div className="input-group mb-3">
+                        <input type="number" name="yinput" onChange={this.handleChange} className="form-control" placeholder="y value" />
+                        <div className="input-group-append">
+                            <button className="btn btn-outline-secondary" onClick={this.addPoint} type="button">Add Point</button>
+                        </div>
+                    </div>
                     <table className="table table-striped">
                         <thead className="thead-light">
                             <tr>
@@ -92,7 +128,7 @@ class Sidebar extends React.Component {
                         <tbody>
                             {this.props.pointData.map((item, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={index}>
                                         <th scope="row">{index}</th>
                                         <td>{item.x}</td>
                                         <td>{item.y}</td>
