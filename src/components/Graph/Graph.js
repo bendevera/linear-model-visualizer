@@ -40,7 +40,7 @@ class Graph extends React.Component {
     render() {
         const cyan900 = "#61dafb";
         return (
-            <div className="col-md-9">
+            <div className="col-md-8 graph-section">
                 <VictoryChart
             width={500}
             height={500}

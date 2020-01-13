@@ -40,6 +40,10 @@ class App extends React.Component {
     return Math.pow(std/(ln-1), .5)
   }
 
+  roundToThree(num) {
+    return Math.round(num*1000) / 1000
+  }
+
   getBestFit() {
     let ln = this.state.active.length
     if (ln < 2) {
@@ -85,13 +89,13 @@ class App extends React.Component {
     let lineData = this.getLineData(b, A)
     console.log(lineData)
     let results = {
-      A: A,
-      b: b,
-      mx: mx,
-      my: my,
-      sx: sx,
-      sy: sy, 
-      r: r
+      A: this.roundToThree(A),
+      b: this.roundToThree(b),
+      mx: this.roundToThree(mx),
+      my: this.roundToThree(my),
+      sx: this.roundToThree(sx),
+      sy: this.roundToThree(sy), 
+      r: this.roundToThree(r)
     }
     this.setState({
       lineData: lineData,
@@ -121,7 +125,7 @@ class App extends React.Component {
         <Navbar getBestFit={this.getBestFit} />
         <div className="row">
           <Graph passActive={this.setActive} lineData={this.state.lineData} />
-          <Sidebar results={this.state.results} />
+          <Sidebar results={this.state.results} pointData={this.state.active} />
         </div>
       </div>
     );

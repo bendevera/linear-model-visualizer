@@ -1,5 +1,8 @@
 .sidebar-section {
     color: rgb(51,57,64);
+    text-align: left;
+    background-color: white;
+    box-shadow: 10px 10px grey;
 }
 
 .sidebar-section h3 {
@@ -10,4 +13,35 @@
 .sidebar-section p {
     margin: 0;
     padding: 0;
+}
+
+.sidebar-section h6 {
+    color: black;
+    margin-top: 4%;
+    margin-bottom: 2%;
+}
+
+.sidebar-container {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.sidebar-btns {
+    margin-top: 4%;
+}
+
+.formula {
+    font-family: 'Source Code Pro', monospace;
+}
+
+.b-text {
+    color: rgb(44, 22, 167);
+}
+
+.A-text {
+    color: rgb(167, 7, 7);
+}
+
+.final-text {
+    color: rgb(39,167,69);
 }
