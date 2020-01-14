@@ -35,3 +35,20 @@ export function get_r(x, y) {
     let r = num_r / den_r
     return r
 }
+
+export function randomData(maxVal, num) {
+    let points = [];
+    for (let i=0;i<num;i++) {
+        let currX = roundToThree(Math.random() * maxVal)
+        let currY = roundToThree(Math.random() * maxVal)
+        let currPoint = {
+            x: currX,
+            y: currY
+        }
+        // console.log("POINT " + i.toString())
+        // console.log(currPoint);
+        points.push(currPoint);
+    }
+    // console.log(points)
+    return points
+}

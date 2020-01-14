@@ -3,7 +3,7 @@ import './App.css';
 import Graph from '../Graph/Graph';
 import Navbar from '../Navbar/Navbar';
 import Sidebar from '../Sidebar/Sidebar';
-import {get_r, mean, standardDeviation, roundToThree} from '../../util';
+import {get_r, mean, standardDeviation, roundToThree, randomData} from '../../util';
 
 
 class App extends React.Component {
@@ -25,8 +25,9 @@ class App extends React.Component {
       ymax: 5
     }
     this.getBestFit = this.getBestFit.bind(this);
-    this.setActive = this.setActive.bind(this);
+    this.removePoint = this.removePoint.bind(this);
     this.addPoint = this.addPoint.bind(this);
+    this.setRandomData = this.setRandomData.bind(this);
   }
 
   getBestFit() {
@@ -82,10 +83,18 @@ class App extends React.Component {
     return data
   }
 
-  setActive(points) {
+  removePoint(x, y) {
+    let newActive = this.state.active;
+    for (let i=0; i<newActive.length; i++) {
+        if (newActive[i].x === x & newActive[i].y === y) {
+            newActive.splice(i, 1)
+            break
+        }
+    }
     this.setState({
-      active: points
+      active: newActive
     })
+    console.log("removed point, new active:")
     console.log(this.state.active)
   }
 
@@ -97,14 +106,26 @@ class App extends React.Component {
     })
   }
 
+  setRandomData() {
+    console.log("SETTING RANDOM DATA")
+    let newActive = randomData(5, 10);
+    console.log(newActive)
+    this.setState({
+      active: newActive,
+      lineData: []
+    })
+  }
+
   render() {
     return (
       <div className="App">
+
         <Navbar getBestFit={this.getBestFit} />
+
         <div className="row">
 
           <Graph 
-            passActive={this.setActive} 
+            removePoint={this.removePoint} 
             active={this.state.active} 
             lineData={this.state.lineData} 
             xmax={this.state.xmax}
@@ -113,7 +134,8 @@ class App extends React.Component {
           <Sidebar 
             results={this.state.results} 
             pointData={this.state.active} 
-            addData={this.addPoint} />
+            addData={this.addPoint}
+            fillRandomData={this.setRandomData} />
             
         </div>
       </div>

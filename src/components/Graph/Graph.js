@@ -8,16 +8,7 @@ class Graph extends React.Component {
     }
 
     handleData(props) {
-        let new_active = this.props.active;
-        for (let i=0; i<new_active.length; i++) {
-            if (new_active[i].x === props.datum.x & new_active[i].y === props.datum.y) {
-                new_active.splice(i, 1)
-                break
-            }
-        }
-        this.props.passActive(new_active)
-        // return fill === "black" ? { style: { fill: cyan900 } } : { style: { fill: "black" } }
-        return null
+        this.props.removePoint(props.datum.x, props.datum.y)
     }
 
     render() {

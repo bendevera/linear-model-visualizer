@@ -29,7 +29,7 @@ class Sidebar extends React.Component {
 
     handleChange(e) {
         let change = {};
-        change[e.target.name] = parseInt(e.target.value)
+        change[e.target.name] = parseFloat(e.target.value)
         this.setState(change);
     }
 
@@ -103,18 +103,30 @@ class Sidebar extends React.Component {
         } else {
             return (
                 <div className="col-md-4 sidebar-section m-0">
-                    <div className="btn-group sidebar-btns" role="group">
-                        <button className="btn btn-secondary active" data={0}>Data</button>
-                        <button className="btn btn-secondary" onClick={this.setActive} data={1}>Results</button>
+                    <div className="row my-2">
+                        <div className="col">
+                            <div className="btn-group sidebar-btns" role="group">
+                                <button className="btn btn-secondary active" data={0}>Data</button>
+                                <button className="btn btn-secondary" onClick={this.setActive} data={1}>Results</button>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <button className="btn btn-outline-secondary prefill-button my-2" onClick={this.props.fillRandomData} type="button">Prefill /w Random Data</button>
+                        </div>
                     </div>
                     <h3>Simple Linear Regression Data</h3>
-                    <div className="input-group mb-3">
-                        <input type="number" name="xinput" onChange={this.handleChange} className="form-control" placeholder="x value" />
-                    </div>
-                    <div className="input-group mb-3">
-                        <input type="number" name="yinput" onChange={this.handleChange} className="form-control" placeholder="y value" />
-                        <div className="input-group-append">
-                            <button className="btn btn-outline-secondary" onClick={this.addPoint} type="button">Add Point</button>
+                    <div className="row my-2">
+                        <div className="col">
+                            
+                            <div className="input-group">
+                                <input type="number" name="xinput" onChange={this.handleChange} className="form-control" placeholder="x value" />
+                            </div>
+                            <div className="input-group">
+                                <input type="number" name="yinput" onChange={this.handleChange} className="form-control" placeholder="y value" />
+                                <div className="input-group-append">
+                                    <button className="btn btn-outline-secondary" onClick={this.addPoint} type="button">Add Point</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <table className="table table-striped">
