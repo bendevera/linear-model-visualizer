@@ -85,7 +85,7 @@ class Sidebar extends React.Component {
             </div>)
             }
             return (
-                <div className="col-md-4 sidebar-section m-0">
+                <div className="col-md-4 sidebar-section">
                     <div className="btn-group sidebar-btns" role="group">
                         <button className="btn btn-secondary" onClick={this.setActive} data={0}>Data</button>
                         <button className="btn btn-secondary active" data={1}>Results</button>
@@ -102,7 +102,7 @@ class Sidebar extends React.Component {
             )
         } else {
             return (
-                <div className="col-md-4 sidebar-section m-0">
+                <div className="col-md-4 sidebar-section">
                     <div className="row my-2">
                         <div className="col">
                             <div className="btn-group sidebar-btns" role="group">
@@ -111,18 +111,17 @@ class Sidebar extends React.Component {
                             </div>
                         </div>
                         <div className="col">
-                            <button className="btn btn-outline-secondary prefill-button my-2" onClick={this.props.fillRandomData} type="button">Prefill /w Random Data</button>
+                            <button className="btn btn-outline-secondary prefill-button my-2" onClick={this.props.fillRandomData} type="button">Add Random Data</button>
                         </div>
                     </div>
                     <h3>Simple Linear Regression Data</h3>
                     <div className="row my-2">
                         <div className="col">
-                            
                             <div className="input-group">
-                                <input type="number" name="xinput" onChange={this.handleChange} className="form-control" placeholder="x value" />
+                                <input type="number" name="xinput" onChange={this.handleChange} className="form-control bg-dark text-white" placeholder="x value" />
                             </div>
                             <div className="input-group">
-                                <input type="number" name="yinput" onChange={this.handleChange} className="form-control" placeholder="y value" />
+                                <input type="number" name="yinput" onChange={this.handleChange} className="form-control bg-dark text-white" placeholder="y value" />
                                 <div className="input-group-append">
                                     <button className="btn btn-outline-secondary" onClick={this.addPoint} type="button">Add Point</button>
                                 </div>
@@ -130,7 +129,7 @@ class Sidebar extends React.Component {
                         </div>
                     </div>
                     <table className="table table-striped">
-                        <thead className="thead-light">
+                        <thead className="thead-dark">
                             <tr>
                             <th scope="col">#</th>
                             <th scope="col">x</th>
@@ -140,7 +139,7 @@ class Sidebar extends React.Component {
                         <tbody>
                             {this.props.pointData.map((item, index) => {
                                 return (
-                                    <tr key={index}>
+                                    <tr key={index} className="text-white">
                                         <th scope="row">{index}</th>
                                         <td>{item.x}</td>
                                         <td>{item.y}</td>

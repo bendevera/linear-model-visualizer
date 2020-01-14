@@ -1,0 +1,10 @@
+.graph-section {
+    margin: 0;
+    padding: 0;
+}
+
+.max-input:focus {
+    border-color: black;
+    box-shadow: 0 1px 1px black inset, 0 0 8px black;
+    outline: 0 none;
+}

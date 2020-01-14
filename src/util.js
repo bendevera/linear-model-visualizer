@@ -14,8 +14,9 @@ export function standardDeviation(array, mean, ln) {
     return Math.pow(std/(ln-1), .5)
 }
 
-export function roundToThree(num) {
-    return Math.round(num*1000) / 1000
+export function roundTo(num, place) {
+    let multiplier = place * 10
+    return Math.round(num*multiplier) / multiplier
 }
 
 
@@ -36,11 +37,51 @@ export function get_r(x, y) {
     return r
 }
 
-export function randomData(maxVal, num) {
+export function getStats(active) {
+    let ln = active.length
+    if (ln < 2) {
+        alert("Can't get best fit of less than two points.")
+        return 
+    }
+    
+    // array of all x values
+    let x = active.map((item) => { 
+        return item.x 
+    })
+    // calculates mean of x 
+    let mx =  mean(x, ln)
+    // calculates std of x
+    let sx = standardDeviation(x, mx, ln)
+    // array of all y values
+    let y = active.map((item) => {
+        return item.y
+    })
+    // calculates mean of y
+    let my = mean(y, ln)
+    // calculates std of y
+    let sy = standardDeviation(y, my, ln)
+    // r calculations
+    let r = get_r(x, y)
+        
+    let b = r * (sy/sx)
+    let A = my - (b*mx)
+    let results = {
+        A: roundTo(A, 3),
+        b: roundTo(b, 3),
+        mx: roundTo(mx, 3),
+        my: roundTo(my, 3),
+        sx: roundTo(sx, 3),
+        sy: roundTo(sy, 3), 
+        r: roundTo(r, 3)
+    }
+    return results
+}
+
+export function randomData(xMax, yMax, num) {
     let points = [];
     for (let i=0;i<num;i++) {
-        let currX = roundToThree(Math.random() * maxVal)
-        let currY = roundToThree(Math.random() * maxVal)
+        let currX = roundTo(Math.random() * xMax, 1)
+        let currY = roundTo(Math.random() * yMax, 1)
         let currPoint = {
             x: currX,
             y: currY

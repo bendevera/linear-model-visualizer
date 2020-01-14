@@ -3,7 +3,7 @@ import './App.css';
 import Graph from '../Graph/Graph';
 import Navbar from '../Navbar/Navbar';
 import Sidebar from '../Sidebar/Sidebar';
-import {get_r, mean, standardDeviation, roundToThree, randomData} from '../../util';
+import { getStats, randomData } from '../../util';
 
 
 class App extends React.Component {
@@ -22,52 +22,19 @@ class App extends React.Component {
         r: null
       },
       xmax: 5,
-      ymax: 5
+      ymax: 5,
+      numPoints: 10
     }
     this.getBestFit = this.getBestFit.bind(this);
     this.removePoint = this.removePoint.bind(this);
     this.addPoint = this.addPoint.bind(this);
     this.setRandomData = this.setRandomData.bind(this);
+    this.handleMaxInputs = this.handleMaxInputs.bind(this);
   }
 
   getBestFit() {
-    let ln = this.state.active.length
-    if (ln < 2) {
-      alert("Can't get best fit of less than two points.")
-      return 
-    }
-
-    // array of all x values
-    let x = this.state.active.map((item) => { 
-      return item.x 
-    })
-    // calculates mean of x 
-    let mx =  mean(x, ln)
-    // calculates std of x
-    let sx = standardDeviation(x, mx, ln)
-    // array of all y values
-    let y = this.state.active.map((item) => {
-      return item.y
-    })
-    // calculates mean of y
-    let my = mean(y, ln)
-    // calculates std of y
-    let sy = standardDeviation(y, my, ln)
-    // r calculations
-    let r = get_r(x, y)
-    
-    let b = r * (sy/sx)
-    let A = my - (b*mx)
-    let lineData = this.getLineData(b, A)
-    let results = {
-      A: roundToThree(A),
-      b: roundToThree(b),
-      mx: roundToThree(mx),
-      my: roundToThree(my),
-      sx: roundToThree(sx),
-      sy: roundToThree(sy), 
-      r: roundToThree(r)
-    }
+    let results = getStats(this.state.active)
+    let lineData = this.getLineData(results.b, results.A)
     this.setState({
       lineData: lineData,
       results: results
@@ -76,7 +43,7 @@ class App extends React.Component {
 
   getLineData(b, A) {
     let data = []
-    for (let i=0; i<6; i++) {
+    for (let i=0; i<=this.state.xmax; i++) {
       let curr = {x: i, y: A+(b*i)}
       data.push(curr)
     }
@@ -94,8 +61,6 @@ class App extends React.Component {
     this.setState({
       active: newActive
     })
-    console.log("removed point, new active:")
-    console.log(this.state.active)
   }
 
   addPoint(point) {
@@ -108,28 +73,33 @@ class App extends React.Component {
 
   setRandomData() {
     console.log("SETTING RANDOM DATA")
-    let newActive = randomData(5, 10);
-    console.log(newActive)
+    let newActive = randomData(this.state.xmax, this.state.ymax, this.state.numPoints);
     this.setState({
       active: newActive,
       lineData: []
     })
   }
 
+  handleMaxInputs(change) {
+    this.setState(change);
+  }
+
   render() {
     return (
-      <div className="App">
+      <div>
 
         <Navbar getBestFit={this.getBestFit} />
 
-        <div className="row">
+        <div className="row App">
 
           <Graph 
             removePoint={this.removePoint} 
             active={this.state.active} 
             lineData={this.state.lineData} 
             xmax={this.state.xmax}
-            ymax={this.state.ymax}/>
+            ymax={this.state.ymax}
+            numPoints={this.state.numPoints}
+            setMaxInput={this.handleMaxInputs}/>
 
           <Sidebar 
             results={this.state.results} 

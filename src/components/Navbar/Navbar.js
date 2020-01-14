@@ -4,41 +4,19 @@ import "./Navbar.css"
 class Navbar extends React.Component {
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-dark m-0 col-md-12">
-                {/* <a className="navbar-brand text-white" href="#">LMV</a> */}
-                <a className="nav-link dropdown-toggle text-white float-left" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Linear Regression Visualizer
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a className="dropdown-item" href="#">Linear Regression Visualizer</a>
-                    <a className="dropdown-item" href="#">More coming soon...</a>
+            <nav className="navbar navbar-expand-lg navbar-light bg-dark m-0 col-12">
+                <div className="col-6">
+                    <a className="nav-link dropdown-toggle text-white float-left" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Linear Regression Visualizer
+                    </a>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a className="dropdown-item" href="#">Linear Regression Visualizer</a>
+                        <a className="dropdown-item" href="#">More coming soon...</a>
+                    </div>
                 </div>
-                {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="#">Simple Linear Regression</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Features</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Simple Linear Regression
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a className="dropdown-item" href="#">Simple Linear Regression</a>
-                                <a className="dropdown-item" href="#">More coming soon...</a>
-                            </div>
-                        </li>
-                    </ul> 
-                    </div> */}
-                <button className="btn btn-outline-success my-2 my-sm-0 float-right" onClick={this.props.getBestFit}>Get Best Fit</button>
+                <div className="col-6">
+                    <button className="btn btn-outline-success my-2 my-sm-0 float-right" onClick={this.props.getBestFit}>Get Best Fit</button>
+                </div>
             </nav>
         )
     }

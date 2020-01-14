@@ -1,7 +1,15 @@
 .sidebar-section {
     color: rgb(51,57,64);
     text-align: left;
-    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .sidebar-section {
+        padding: 0 4%;
+        text-align: center;
+    }
 }
 
 .sidebar-section h3 {
@@ -17,7 +25,7 @@
 }
 
 .sidebar-section h6 {
-    color: black;
+    color: white;
     margin-top: 4%;
     margin-bottom: 2%;
 }
