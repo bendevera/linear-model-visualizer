@@ -66,13 +66,13 @@ export function getStats(active) {
     let b = r * (sy/sx)
     let A = my - (b*mx)
     let results = {
-        A: roundTo(A, 3),
-        b: roundTo(b, 3),
-        mx: roundTo(mx, 3),
-        my: roundTo(my, 3),
-        sx: roundTo(sx, 3),
-        sy: roundTo(sy, 3), 
-        r: roundTo(r, 3)
+        A: roundTo(A, 2),
+        b: roundTo(b, 2),
+        mx: roundTo(mx, 2),
+        my: roundTo(my, 2),
+        sx: roundTo(sx, 2),
+        sy: roundTo(sy, 2), 
+        r: roundTo(r, 2)
     }
     return results
 }
